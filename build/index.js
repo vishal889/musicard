@@ -243,7 +243,7 @@ class musicCard {
         if (this.author.length > 15) this.author = `${this.author.slice(0, 15)}...`;
 
         const image = new Canvas(1280, 450)
-            .setColor(`#${validatedColor}`)
+            .setColor(`#fff`)
             .printRectangle(0, 0, 1280, 450)
             //.printImage(img, 0, 0, 1280, 450)
             .setTextFont('80px momcakebold')
