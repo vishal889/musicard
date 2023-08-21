@@ -104,7 +104,7 @@ class musicCard {
         const validatedBrightness = parseInt(this.brightness) || 0;
 
         let validatedColor = this.color || 'ff0000';
-
+        let textColor = '#fff'; 
         if (validatedColor === 'auto') {
             const dominantColor = await getColorFromURL(thumbnailURL);
 
@@ -116,6 +116,11 @@ class musicCard {
             const hexColor = await this.rgbToHex(...adjustedPalette);
 
             validatedColor = hexColor.replace('#', '');
+            const luminance = (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
+            
+            if (luminance > 0.5) {
+                textColor = '#000'; 
+                }
         }
 
         if (validatedMode !== 'play' && validatedMode !== 'pause') throw new Error('Invalid mode parameter, must be play or pause');
@@ -239,34 +244,36 @@ class musicCard {
             thumbnailCanvas.height,
         );
 
-        if (this.name.length > 15) this.name = `${this.name.slice(0, 15)}...`;
-        if (this.author.length > 15) this.author = `${this.author.slice(0, 15)}...`;
+        if (this.name.length > 15) this.name = `${this.name.slice(0, 20)}...`;
+        if (this.author.length > 15) this.author = `${this.author.slice(0, 25)}`;
 
-        const image = new Canvas(1280, 450)
-            .setColor(`#fff`)
+        const image = new Canvas(1280, 400)
+            .setColor(`#${validatedColor}`)
             .printRectangle(0, 0, 1280, 450)
             //.printImage(img, 0, 0, 1280, 450)
-            .setTextFont('80px momcakebold')
+            .setColor(`${textColor}`)
+            .setTextFont('bold 60px sans-serif')
+            
             .printText(`${this.name}`, 70, 120)
 
-            .setColor('#fff')
-            .setTextFont('60px momcakebold')
+            .setColor(`${textColor}`)
+            .setTextFont('bold 40px sans-serif')
             .printText(`${this.author}`, 70, 180)
 
-            .setColor('#fff')
-            .setTextFont('35px momcakebold')
-            .printText(`${validatedStartTime}`, 70, 410)
+            .setColor(`${textColor}`)
+            .setTextFont('35px sans-serif')
+            .printText(`${validatedStartTime}`, 70, 380)
 
-            .setColor('#fff')
-            .setTextFont('35px momcakebold')
-            .printText(`${validatedEndTime}`, 675, 410)
+            .setColor(`${textColor}`)
+            .setTextFont('35px sans-serif')
+            .printText(`${validatedEndTime}`, 675, 380)
 
             .printImage(thumbnailCanvas, 837, 8, 435, 435)
 
             .printImage(modeimage, 0, 0, 1280, 450)
 
-            .printImage(progressBarCanvas, 70, 340, 670, 25)
-            .printImage(circleCanvas, 10, 255, 1000, 1000)
+            .printImage(progressBarCanvas, 70, 300, 670, 25) 
+            .printImage(circleCanvas, 10, 215, 1000, 1000)
 
             .toBuffer();
 
