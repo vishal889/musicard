@@ -1,6 +1,8 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const { Canvas } = require('canvas-constructor/cairo');
 const canvas = require('canvas');
-canvas.registerFont('res/momcakebold.ttf', { family: 'momcakebold' });
+canvas.registerFont('node_modules/musicard/res/momcakebold.ttf', { family: 'momcakebold' });
 const { getColorFromURL } = require('color-thief-node');
 
 class musicCard {
@@ -121,10 +123,10 @@ class musicCard {
         const progressBarWidth = (validatedProgress / 100) * 670;
         const circleX = progressBarWidth + 60;
 
-        let modeimage = await canvas.loadImage('res/blank.png');
+        let modeimage = await canvas.loadImage('node_modules/musicard/res/blank.png');
 
         if (validatedMode === 'pause') {
-            modeimage = await canvas.loadImage('res/pause.png');
+            modeimage = await canvas.loadImage('node_modules/musicard/res/pause.png');
         }
 
         const progressBarCanvas = canvas.createCanvas(670, 25);
@@ -159,7 +161,7 @@ class musicCard {
         progressBarCtx.lineTo(0, cornerRadius);
         progressBarCtx.arc(cornerRadius, cornerRadius, cornerRadius, Math.PI, 1.5 * Math.PI);
         progressBarCtx.closePath();
-        progressBarCtx.fillStyle = `#${validatedColor}`;
+        progressBarCtx.fillStyle = `#fff`;//`#${validatedColor}`;
         progressBarCtx.fill();
 
         const circleCanvas = canvas.createCanvas(1000, 1000);
@@ -170,10 +172,10 @@ class musicCard {
 
         circleCtx.beginPath();
         circleCtx.arc(circleX, circleY, circleRadius, 0, 2 * Math.PI);
-        circleCtx.fillStyle = `#${validatedColor}`;
+        circleCtx.fillStyle =  `#fff`; //`#${validatedColor}`;
         circleCtx.fill();
 
-        const img = await canvas.loadImage('res/background.png');
+        const img = await canvas.loadImage('node_modules/musicard/res/background.png');
 
         const thumbnailCanvas = canvas.createCanvas(564, 564);
         const thumbnailCtx = thumbnailCanvas.getContext('2d');
@@ -242,7 +244,8 @@ class musicCard {
 
         const image = new Canvas(1280, 450)
             .setColor(`#${validatedColor}`)
-            .printImage(img, 0, 0, 1280, 450)
+            .printRectangle(0, 0, 1280, 450)
+            //.printImage(img, 0, 0, 1280, 450)
             .setTextFont('80px momcakebold')
             .printText(`${this.name}`, 70, 120)
 
