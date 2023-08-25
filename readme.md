@@ -1,3 +1,4 @@
+🙄
 ![enter image description here](https://raw.githubusercontent.com/A3PIRE/musicard/main/assets/musicard.jpg)
 # About
 **Musicard** is a lightweight and futuristic music card library designed for Discord bots.
